@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from superCanasta.views import inicio, supermercados
+from superCanasta.views import inicio, supermercados, ofertas, busqueda 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',inicio , name='inicio' ),
-    path('supermercados/', supermercados, name='supermercados')
+    path('supermercados/', supermercados, name='supermercados'),
+    path('ofertas/', ofertas, name='ofertas'),
+    path('busqueda/', busqueda, name='busqueda'),
+    
 ]
