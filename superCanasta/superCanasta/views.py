@@ -3,6 +3,10 @@ from django.shortcuts import render
 def inicio (request) :
     return render(request , r'pagina\inicio.html' )
 
+def scrapProductosLaReina (request) :
+    
+    
+    return render(request)
 def supermercados(request) :
     return render(request, r'pagina\supermercados.html')
 
