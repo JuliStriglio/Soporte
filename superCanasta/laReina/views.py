@@ -52,4 +52,4 @@ def scrapProductosLaReina (request) :
         archivo.write(resultados_str)
 
         
-        return render(request)
+    return render(request, r'laReina\productos.html' )
