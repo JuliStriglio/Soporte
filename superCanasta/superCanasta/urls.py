@@ -23,12 +23,9 @@ from django.conf import settings
 urlpatterns = [
     path('', include('canasta.urls')),
     path('laReina/', include('laReina.urls')),
+    path('coto/', include('coto.urls')),
     path('admin/', admin.site.urls),
-#    path('',inicio , name='inicio' ),
-#    path('supermercados/', supermercados, name='supermercados'),
-#    path('ofertas/', ofertas, name='ofertas'),
-#    path('busqueda/', busqueda, name='busqueda'),
-#    path('laReina/', include('laReina.urls')),
+
 
     
 ]

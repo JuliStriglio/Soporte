@@ -1,0 +1,44 @@
+{% extends "compartidos/base.html" %}
+
+{% block head %} 
+<title>Productos Coto </title>
+{% endblock head %} 
+
+{% block header %}
+<header class="bg-dark py-5 vh-100 d-flex align-items-center">
+    <div class="container px-10">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2">Productos de Coto</h1>
+                    <h5 class="text-white mb-2">Resultados del scrapping</h5>
+                    <div class="container mt-4">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for resultado in page_obj %}
+                                <tr>
+                                    <td><img src="{{ resultado.Foto }}" alt="Foto del producto"></td>
+                                    <td>{{ resultado.Producto }}</td>
+                                    <td>{{ resultado.Precio }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <!-- Paginación (falta mejorar)-->
+                        {% include "paginacion.html" %} 
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
