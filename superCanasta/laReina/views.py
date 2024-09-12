@@ -1,14 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-
+from django.core.paginator import Paginator
 # Create your views here.
 
-def scrapProductosLaReina () :
-
-
+def scrapProductosLaReina():
     # Lista de enlaces que deseas analizar
     links = [
         'https://www.lareinaonline.com.ar/productosnl.asp?nl=01010100&TM=cx',
@@ -24,38 +21,66 @@ def scrapProductosLaReina () :
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
 
-                # Extraer información específica si la URL es de 'lareinaonline'
-                if 'lareinaonline.com.ar' in link:
-                    productos = soup.find_all('div', class_='InfoProd')
-                    for producto in productos:
-                        nombre_elemento = producto.find('div', class_='desc')
-                        precio_elemento = producto.find('div', class_='izq')
-                        if nombre_elemento and precio_elemento:
-                            nombre = nombre_elemento.text.strip()
-                            precio = precio_elemento.text.strip()
-                            datos.append({'URL': link, 'Producto': nombre, 'Precio': precio})
-                        else:
-                            datos.append({'URL': link, 'Producto': 'Elemento no encontrado', 'Precio': 'N/A'})
-                else:
-                    # Para otros links, mostrar los primeros 200 caracteres del contenido
-                    datos.append({'URL': link, 'Producto': 'Contenido', 'Precio': response.text[:200] + '...'})
-
+                # Extraer productos
+                productos = soup.find_all('div', class_='InfoProd')
+                for producto in productos:
+                    nombre_elemento = producto.find('div', class_='desc')
+                    precio_elemento = producto.find('div', class_='izq')
+                    foto_elemento = producto.find_previous_sibling('div', class_='FotoProd')
+                    
+                    if foto_elemento:
+                        img_tag = foto_elemento.find('img')
+                        foto_url = img_tag['src'] if img_tag and 'src' in img_tag.attrs else None
+                    else:
+                        foto_url = 'No disponible'
+                    
+                    # Asegúrate de que las variables 'nombre' y 'precio' tengan valores
+                    if nombre_elemento and precio_elemento:
+                        nombre = nombre_elemento.text.strip()
+                        precio = precio_elemento.text.strip()
+                        datos.append({
+                            'URL': link,
+                            'Producto': nombre,
+                            'Precio': precio,
+                            'Foto': foto_url  # Cambiado a 'foto_url'
+                        })
+                    else:
+                        datos.append({
+                            'URL': link, 
+                            'Producto': 'Elemento no encontrado', 
+                            'Precio': 'N/A', 
+                            'Foto': 'No disponible'
+                        })
             else:
-                datos.append({'URL': link, 'Producto': 'Error', 'Precio': f"No se pudo acceder, status code: {response.status_code}"})
+                datos.append({
+                    'URL': link, 
+                    'Producto': 'Error', 
+                    'Precio': f"No se pudo acceder, status code: {response.status_code}", 
+                    'Foto': 'No disponible'
+                })
         except requests.exceptions.RequestException as e:
-            datos.append({'URL': link, 'Producto': 'Error', 'Precio': str(e)})
+            datos.append({
+                'URL': link, 
+                'Producto': 'Error', 
+                'Precio': str(e), 
+                'Foto': 'No disponible'
+            })
 
     # Convertir los datos a un DataFrame de pandas y luego a una lista de diccionarios
     df = pd.DataFrame(datos)
     return df.to_dict(orient='records')
 
+
 def mostrar_resultados(request):
-    # Realizar el scraping y obtener los resultados
-    resultados = scrapProductosLaReina()
+    resultado = scrapProductosLaReina()
 
-    # Renderizar la plantilla con los resultados
-    return render(request, 'productos.html', {'resultados': resultados})
+    # Configurar la paginación
+    paginator = Paginator(resultado, 5)
+    pagina = request.GET.get('page')
+    page_obj = paginator.get_page(pagina)
 
+    # Renderizar la plantilla con los resultados paginados
+    return render(request, 'productos.html', {'page_obj': page_obj})
 
     
 #    links = [
@@ -104,3 +129,6 @@ def mostrar_resultados(request):
 
         
     #return render(request, r'laReina/productos.html' )
+
+
+    
