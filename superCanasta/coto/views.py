@@ -18,6 +18,7 @@ def scrapProductosCoto() :
     productos = []
     precios = []
 
+
     for link in links:
         try:
             response = requests.get(link, headers=headers)
@@ -49,26 +50,24 @@ def scrapProductosCoto() :
                 print(f"No se pudo acceder a {link}, status code: {response.status_code}")
         except requests.exceptions.RequestException as e:
             print(f"Error al acceder a {link}: {e}")
-            
 
     # Crear un DataFrame de pandas con los datos extraídos
     df = pd.DataFrame({'Producto': productos, 'Precio': precios})
 
-    # Mostrar el DataFrame
-    print(df)
+    # Retornar los resultados como lista de diccionarios para pasarlos a la vista
+    resultados = df.to_dict(orient='records')
+    return resultados
 
-    # Guardar el DataFrame en un archivo CSV
-    df.to_csv('resultados_scraping.csv', index=False)
 
-def mostrar_resultados_coto(request):
+def mostrar_resultados_coto (request) :
     resultados = scrapProductosCoto()
+    
+    paginator = Paginator(resultados, 5)  # 10 resultados por página
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-
-    # Renderizar la plantilla con los resultados paginados
-    return render(request, 'coto/productos.html', {'resultados': resultados})
-
-
-
+    # Renderizar la plantilla con los resultados
+    return render(request, 'coto/productos.html', {'page_obj': page_obj})
 
 
 
