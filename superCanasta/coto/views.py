@@ -41,13 +41,15 @@ def scrapProductosCoto() :
                             precios.append(precio)
                         else:
                             productos.append(nombre_elemento)
-                            precios.append('Precio no encontrado')
+                            precio_elemento = precio_info.find('span', class_='price_discount_gde')
+                            precio = precio_elemento.text.strip()
+                            precios.append(precio)
 
                 else:
                     print(f"Contenido de {link}:\n{response.text[:200]}...")
 
             else:
-                print(f"No se pudo acceder a {link}, status code: {response.status_code}")
+                print(f"No se pudo acceder a {link}_, status code: {response.status_code}")
         except requests.exceptions.RequestException as e:
             print(f"Error al acceder a {link}: {e}")
 
