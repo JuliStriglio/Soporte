@@ -3,7 +3,7 @@
 {% block head %} 
 <title>AHORRO MAX </title>
 {% endblock head %} 
-
+{% load static %}
 {% block header %}
 <header class="bg-dark py-5 vh-100 d-flex align-items-center">
     <div class="container px-5">
@@ -13,6 +13,27 @@
                     <h1 class="display-5 fw-bolder text-white mb-2">Supermercados</h1>
                     <p class="lead text-white-50 mb-4">Se emplearan herramientas de scrapping para extraer datos de supermercados como coto ,la gallega, carrefour </p>
                 </div>
+                <div class= "container">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="text-white">La Reina</h3>
+                            <img src="{% static 'img/laReinaLogo.jpeg' %}" alt="Logo la reina"  style="width: 120px; height: auto; margin-right: 10px;">
+                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href={% url "mostrar_resultados" %}>La Reina</a>
+                        </div>
+                        <div class="col">
+                            
+                            <h3 class="text-white">Coto</h3>
+                            <img src="{% static 'img/CotoLogo.png' %}" alt="Logo Coto"  style="width: 120px; height: auto; margin-right: 10px;">
+                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href={% url "mostrar_resultados_coto" %}>Coto</a>
+                        </div>
+
+
+                         </div>
+                   
+
+
+                </div>
+
             </div>
         </div>
     </div>
