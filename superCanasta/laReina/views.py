@@ -26,11 +26,19 @@ def scrapProductosLaReina():
                 for producto in productos:
                     nombre_elemento = producto.find('div', class_='desc')
                     precio_elemento = producto.find('div', class_='izq')
-                    foto_elemento = producto.find_previous_sibling('div', class_='FotoProd')
+
+                    # Buscar la imagen directamente dentro del div del producto
+                    foto_elemento = producto.find_previous('div', class_='FotoProd')
                     
                     if foto_elemento:
                         img_tag = foto_elemento.find('img')
-                        foto_url = img_tag['src'] if img_tag and 'src' in img_tag.attrs else None
+                        if img_tag and 'src' in img_tag.attrs:
+                            foto_url = img_tag['src']
+                            # Verificar si la URL de la imagen es completa o relativa
+                            if not foto_url.startswith('http'):
+                                foto_url = 'https://www.lareinaonline.com.ar/' + foto_url
+                        else:
+                            foto_url = 'No disponible'
                     else:
                         foto_url = 'No disponible'
                     
@@ -42,7 +50,7 @@ def scrapProductosLaReina():
                             'URL': link,
                             'Producto': nombre,
                             'Precio': precio,
-                            'Foto': foto_url  # Cambiado a 'foto_url'
+                            'Foto': foto_url
                         })
                     else:
                         datos.append({
@@ -69,6 +77,7 @@ def scrapProductosLaReina():
     # Convertir los datos a un DataFrame de pandas y luego a una lista de diccionarios
     df = pd.DataFrame(datos)
     return df.to_dict(orient='records')
+
 
 
 def mostrar_resultados(request):
