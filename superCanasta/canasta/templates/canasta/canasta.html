@@ -1,0 +1,51 @@
+{% extends "compartidos/base.html" %}
+
+{% block head %}
+    <title>AHORRO MAX</title>
+{% endblock head %}
+
+{% block header %}
+<script>
+    function showAddProductForm() {
+        const password = prompt("Ingrese la contraseña:");
+        if (password === "admin") {
+            document.getElementById("addProductForm").style.display = "block";
+        } else {
+            alert("Contraseña incorrecta");
+        }
+    }
+</script>
+
+<header class="bg-dark py-5 vh-100 d-flex align-items-center">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2">Productos contemplados en la Canasta Básica</h1>
+                    <ul>
+                        {% for producto in productos_canasta %}
+                            <li class="lead text-white-50 mb-4">{{ producto.descripcion }} - Cantidad: {{ producto.cantidad }}</li>
+                        {% endfor %}
+                    </ul>
+                    <button class="btn btn-light mt-3" onclick="showAddProductForm()">Añadir Producto</button>
+
+                    <div id="addProductForm" style="display:none; margin-top: 20px;">
+                        <form method="POST" action="{% url 'add_producto' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre del Producto:</label>
+                                <input type="text" id="nombre" name="nombre" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cantidad" class="form-label">Cantidad:</label>
+                                <input type="number" id="cantidad" name="cantidad" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Añadir</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock header %}
