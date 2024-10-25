@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('archivo', type=str)
 
-    def handle(self,**kwargs):
+    def handle(self,*args,**kwargs):
         archivo = kwargs['archivo']
         
         if not os.path.exists(archivo):
@@ -20,7 +20,7 @@ class Command(BaseCommand):
             for fila in lector:
                 descripcion = fila['Producto'].strip()
                 precio_str = fila['Precio'].replace('$', '').replace('.', '').replace(',', '.')  # lo hace formato decimal
-
+                supermercado = 'coto'
                 if precio_str.lower() == 'precio no encontrado':
                     self.stdout.write(self.style.WARNING(f'Producto {descripcion} tiene un precio no encontrado. Ignorando.'))
                     continue
@@ -31,7 +31,7 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.WARNING(f'Error al convertir el precio para el producto {descripcion}. Ignorando.'))
                     continue
 
-                producto = Producto(descripcion=descripcion, precio=precio)
+                producto = Producto(descripcion=descripcion, precio=precio, supermercado = supermercado)
                 producto.save()
                 self.stdout.write(self.style.SUCCESS(f'Producto {descripcion} cargado exitosamente.'))
 
