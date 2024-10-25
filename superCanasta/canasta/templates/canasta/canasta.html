@@ -1,7 +1,7 @@
 {% extends "compartidos/base.html" %}
 
 {% block head %}
-    <title>AHORRO MAX</title>
+    <title>AHORRO MAX - Canasta Básica</title>
 {% endblock head %}
 
 {% block header %}
@@ -17,34 +17,56 @@
 </script>
 
 <header class="bg-dark py-5 vh-100 d-flex align-items-center">
-    <div class="container px-5">
-        <div class="row gx-5 justify-content-center">
-            <div class="col-lg-6">
-                <div class="text-center my-5">
-                    <h1 class="display-5 fw-bolder text-white mb-2">Productos contemplados en la Canasta Básica</h1>
-                    <ul>
-                        {% for producto in productos_canasta %}
-                            <li class="lead text-white-50 mb-4">{{ producto.descripcion }} - Cantidad: {{ producto.cantidad }}</li>
-                        {% endfor %}
-                    </ul>
-                    <button class="btn btn-light mt-3" onclick="showAddProductForm()">Añadir Producto</button>
+    <div class="container text-center text-white">
+        <h1 class="display-5 fw-bolder mb-4">Productos de la Canasta Básica</h1>
 
-                    <div id="addProductForm" style="display:none; margin-top: 20px;">
-                        <form method="POST" action="{% url 'add_producto' %}">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre del Producto:</label>
-                                <input type="text" id="nombre" name="nombre" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="cantidad" class="form-label">Cantidad:</label>
-                                <input type="number" id="cantidad" name="cantidad" class="form-control" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Añadir</button>
-                        </form>
-                    </div>
+        <div class="container text-center mb-4">
+            <h2 class="mb-4">Lista de Productos</h2>
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th class="text-white">Nombre</th>
+                        <th class="text-white">Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos_canasta %}
+                    <tr>
+                        <td>{{ producto.descripcion }}</td>
+                        <td>{{ producto.cantidad }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center">No hay productos disponibles.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        
+        <button class="btn btn-light mt-3" onclick="showAddProductForm()">Añadir Producto</button>
+
+        <div id="addProductForm" class="mt-4" style="display:none;">
+            <form method="POST" action="{% url 'add_producto' %}" class="mx-auto" style="max-width: 400px;">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="nombre" class="form-label fw-bold">Nombre del Producto:</label>
+                    <input type="text" id="nombre" name="nombre" 
+                           class="form-control" required minlength="2" maxlength="100" 
+                           placeholder="Ingrese el nombre del producto">
                 </div>
-            </div>
+
+                <div class="mb-3">
+                    <label for="cantidad" class="form-label fw-bold">Cantidad:</label>
+                    <input type="number" id="cantidad" name="cantidad" 
+                           class="form-control" required min="1" step="1" 
+                           placeholder="Ingrese la cantidad"> 
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Añadir</button>
+            </form>
         </div>
     </div>
 </header>
