@@ -1,9 +1,4 @@
-from django.shortcuts import render
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
-from django.core.paginator import Paginator
-import os 
+
 # Create your views here.
 
 ##def scrapProductosCoto():
@@ -85,7 +80,6 @@ import os
   #  r#eturn render(request, 'coto/productos.html', {'page_obj': page_obj})
 #
 #
-#
 
 
 
@@ -94,14 +88,14 @@ from django.shortcuts import render
 import requests
 from bs4 import BeautifulSoup
 from .models import Producto
-
+from django.core.paginator import Paginator
 
 # Create your views here.
 
 def scrapProductosCoto():
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
     
-    links = ['https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-infusiones/_/N-dw58vw']
+    links = ['https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-infusiones/_/N-dw58vw','https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-harinas/_/N-842qrm']
 
     for link in links:
         try:
@@ -162,11 +156,11 @@ def scrapProductosCoto():
 
 
 def mostrar_resultados_coto (request) :
+    verificar()
     resultados = Producto.objects.all()
     paginator = Paginator(resultados, 5)  # 5 resultados por página
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
     # Renderizar la plantilla con los resultados
     return render(request, 'coto/productos.html', {'page_obj': page_obj})
 
@@ -176,11 +170,11 @@ def mostrar_resultados_coto (request) :
 
 def verificar():
 
-    fecha_hoy = datetime.now()
-    producto = Producto.objects.filter(fecha_act=fecha_hoy).last()
+    fecha_hoy = datetime.now().date()
+    producto = Producto.objects.filter(fecha_act__date=fecha_hoy).last()  # Usamos __date para comparar fechas
 
-    if producto:
+    if not producto:  # Si no hay productos de hoy, ejecutamos el scraping
         scrapProductosCoto()
-        Producto.objects.all().update(fecha_act=fecha_hoy)
-    else: 
-        print('Los datos ya estan actualizados hoy dia')
+        Producto.objects.all().update(fecha_act=datetime.now())
+    else:
+        print('Los datos ya están actualizados para hoy.')

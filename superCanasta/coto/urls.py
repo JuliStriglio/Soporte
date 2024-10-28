@@ -3,6 +3,5 @@ from coto.views import mostrar_resultados_coto
 
 urlpatterns = [
     
-    path('resultados/', mostrar_resultados_coto, name = 'mostrar_resultados_coto'),
-
+    path('resultados/', mostrar_resultados_coto, name = 'mostrar_resultados_coto')
 ]
