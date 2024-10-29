@@ -1,8 +1,8 @@
 from django.urls import path 
-from laReina.views import scrapProductosLaReina, mostrar_resultados
+from laReina.views import mostrar_resultados_lareina
 
 urlpatterns = [
     
-    path('resultados/', mostrar_resultados, name = 'mostrar_resultados'),
+    path('resultados/', mostrar_resultados_lareina, name = 'mostrar_resultados_lareina'),
 
 ]

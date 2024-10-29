@@ -24,9 +24,9 @@
                             <tbody>
                                 {% for resultado in page_obj %}
                                 <tr>
-                                    <td><img src="{{ resultado.Foto }}" alt="Foto del producto" width="80" height="80"></td>
-                                    <td>{{ resultado.Producto }}</td>
-                                    <td>{{ resultado.Precio }}</td>
+                                    <td><img src="{{ resultado.imagen }}" alt="Foto del producto" width="80" height="80"></td>
+                                    <td>{{ resultado.descripcion }}</td>
+                                    <td>{{ resultado.precio }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

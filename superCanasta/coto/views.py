@@ -95,7 +95,10 @@ from django.core.paginator import Paginator
 def scrapProductosCoto():
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
     
-    links = ['https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-infusiones/_/N-dw58vw','https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-harinas/_/N-842qrm']
+    links = ['https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-infusiones/_/N-dw58vw',
+             'https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-harinas/_/N-842qrm',
+             'https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-aceites-y-condimentos-aceites/_/N-16r0nc0',
+             'https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-almac%C3%A9n-infusiones-mate/_/N-vra9dh']
 
     for link in links:
         try:
@@ -154,7 +157,6 @@ def scrapProductosCoto():
     return "Scraping y guardado completados."
 
 
-
 def mostrar_resultados_coto (request) :
     verificar()
     resultados = Producto.objects.all()
@@ -163,9 +165,6 @@ def mostrar_resultados_coto (request) :
     page_obj = paginator.get_page(page_number)
     # Renderizar la plantilla con los resultados
     return render(request, 'coto/productos.html', {'page_obj': page_obj})
-
-
-
 
 
 def verificar():
