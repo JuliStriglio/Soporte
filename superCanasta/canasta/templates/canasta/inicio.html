@@ -1,25 +1,133 @@
-{% extends "compartidos/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Ahorro Max - Encuentra la canasta básica más económica" />
+        <meta name="author" content="ProyectoSoporte G5" />
 
-{% block head %} 
-<title>AHORRO MAX </title>
-{% endblock head %} 
+        <title>{% block head %}Ahorro Max{% endblock head %}</title>
 
-{% block header %}
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="{% static 'img/logo2.png' %}" />
 
-<header class="bg-dark py-5 vh-100 d-flex align-items-center">
-    <div class="container px-5">
-        <div class="row gx-5 justify-content-center">
-            <div class="col-lg-6">
-                <div class="text-center my-5">
-                    <h1 class="display-5 fw-bolder text-white mb-2">AHORRO MAX</h1>
-                    <p class="lead text-white-50 mb-4">Sistema el cual te ayudara a elegir el supermercado el cual tenga su canasta basica mas economica y ahorrar los gastos de cada dia </p>
+        <!-- CSS Styles -->
+        <link href="{% static 'compartidos/css/styles.css' %}" rel="stylesheet" />
 
+        <!-- Bootstrap icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+        <!-- Core theme CSS (Bootstrap) -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+
+        <!-- Responsive Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+            <div class="container px-5">
+                <a class="navbar-brand d-flex align-items-center" href="#!">
+                    <img src="{% static 'img/logo2.png' %}" alt="Logo" style="width: 50px; height: auto; margin-right: 10px;">
+                    <span>Ahorro Max</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" href="{% url 'inicio' %}">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'supermercados' %}">Canasta Básica</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'canasta' %}">Canasta</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'busqueda' %}">Búsqueda</a></li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </div>
-</header>
+        </nav>
 
-{% endblock header %}
+        
 
+        <!-- Main Content -->
+        <main>
+            {% block content %}
+            <div id="ahorroMaxCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'img/img1.jpg' %}" class="d-block w-100" alt="Imagen 1">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                            <div class="carousel-caption-box">
+                                <h1 class="display-5 fw-bolder text-warning mb-2">AHORRO MAX</h1>
+                                <p class="lead text-light mb-4">Encuentra el supermercado con la canasta básica más económica.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'img/img2.jpg' %}" class="d-block w-100" alt="Imagen 2">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                            <div class="carousel-caption-box">
+                                <h1 class="display-5 fw-bolder text-warning mb-2">AHORRO MAX</h1>
+                                <p class="lead text-light mb-4">Optimiza tus gastos y descubre los mejores precios.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'img/img3.jpg' %}" class="d-block w-100" alt="Imagen 3">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                            <div class="carousel-caption-box">
+                                <h1 class="display-5 fw-bolder text-warning mb-2">AHORRO MAX</h1>
+                                <p class="lead text-light mb-4">Compara precios y toma decisiones de ahorro inteligentes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#ahorroMaxCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#ahorroMaxCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
 
+            <!-- Descripción del Sistema -->
+            <section class="py-5 bg-light">
+                <div class="container px-5 text-center">
+                    <h2 class="fw-bold text-dark">¿Qué es Ahorro Max?</h2>
+                    <p class="lead mt-3">Ahorro Max es una plataforma diseñada para ayudarte a encontrar los supermercados que ofrecen la canasta básica al precio más accesible. 
+                    Nuestro objetivo es ayudarte a optimizar tus gastos diarios, comparando precios y brindándote la información que necesitas para tomar decisiones de ahorro inteligentes.</p>
+                </div>
+            </section>
+
+            <!-- Tecnologías Utilizadas -->
+            <section class="py-5">
+                <div class="container px-5 text-center">
+                    <h2 class="fw-bold text-dark">Tecnologías Utilizadas</h2>
+                    <p class="lead mt-3">Este sistema fue desarrollado utilizando las siguientes tecnologías:</p>
+                    <ul class="list-inline">
+                        <li class="list-inline-item mx-3"><i class="bi bi-circle-fill text-warning"></i> Django</li>
+                        <li class="list-inline-item mx-3"><i class="bi bi-circle-fill text-primary"></i> Python</li>
+                        <li class="list-inline-item mx-3"><i class="bi bi-circle-fill text-success"></i> HTML</li>
+                        <li class="list-inline-item mx-3"><i class="bi bi-circle-fill text-info"></i> CSS</li>
+                    </ul>
+                </div>
+            </section>
+
+            {% endblock content %}
+        </main>
+
+        <!-- Footer -->
+        <footer class="py-4 bg-dark text-white-50">
+            <div class="container text-center">
+                <p class="m-0">&copy; ProyectoSoporte G5 2024. Todos los derechos reservados.</p>
+                <div class="social-icons mt-2">
+                    <a href="#" class="text-white mx-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white mx-2"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white mx-2"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JavaScript Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
