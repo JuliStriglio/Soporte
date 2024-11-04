@@ -10,4 +10,4 @@ class Producto(models.Model):
 
 
     def __str__(self):
-        return self.descripcion
+        return f"{self.descripcion} - ${self.precio}"

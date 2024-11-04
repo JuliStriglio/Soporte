@@ -137,9 +137,11 @@ def scrapProductosCoto():
                         imagen_url = img_tag['src'] if img_tag and 'src' in img_tag.attrs else 'No disponible'
 
                         # Guarda el producto en la base de datos
+                        if descripcion_elemento:
+                         nombre = descripcion_elemento.text()
                         try:
                             producto = Producto(
-                                descripcion=descripcion_elemento,
+                                descripcion=nombre,
                                 supermercado='coto',
                                 imagen=imagen_url,
                                 precio=precio,

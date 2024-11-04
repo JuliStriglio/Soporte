@@ -1,39 +1,46 @@
 {% extends "compartidos/base.html" %}
 
-{% block head %} 
-<title>AHORRO MAX </title>
-{% endblock head %} 
+{% block head %}
+<title>AHORRO MAX - Supermercados</title>
+{% endblock head %}
 {% load static %}
 {% block header %}
 <header class="bg-dark py-5 vh-100 d-flex align-items-center">
     <div class="container px-5">
         <div class="row gx-5 justify-content-center">
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <div class="text-center my-5">
                     <h1 class="display-5 fw-bolder text-white mb-2">Supermercados</h1>
-                    <p class="lead text-white-50 mb-4">Se emplearan herramientas de scrapping para extraer datos de supermercados como coto ,la gallega, carrefour </p>
+                    <p class="lead text-white-50 mb-4">Utilizamos herramientas de scraping para extraer datos de supermercados como Coto, La Gallega y Carrefour.</p>
                 </div>
-                <div class= "container">
-                    <div class="row">
-                        <div class="col">
-                            <h3 class="text-white">La Reina</h3>
-                            <img src="{% static 'img/laReinaLogo.jpeg' %}" alt="Logo la reina"  style="width: 120px; height: auto; margin-right: 10px;">
-                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href={% url "mostrar_resultados_lareina" %}>La Reina</a>
-                        </div>
-                        <div class="col">
-                            
-                            <h3 class="text-white">Coto</h3>
-                            <img src="{% static 'img/CotoLogo.png' %}" alt="Logo Coto"  style="width: 120px; height: auto; margin-right: 10px;">
-                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href={% url "mostrar_resultados_coto" %}>Coto</a>
-                        </div>
-
-
-                         </div>
-                   
-
-
+                
+                <div class="row mb-4">
+                    <div class="col text-center">
+                        <h3 class="text-white">La Reina</h3>
+                        <img src="{% static 'img/laReinaLogo.jpeg' %}" alt="Logo La Reina" style="width: 120px; height: auto; margin-right: 10px;">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{% url 'mostrar_resultados_lareina' %}">Ver Productos</a>
+                    </div>
+                    <div class="col text-center">
+                        <h3 class="text-white">Coto</h3>
+                        <img src="{% static 'img/CotoLogo.png' %}" alt="Logo Coto" style="width: 120px; height: auto; margin-right: 10px;">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{% url 'mostrar_resultados_coto' %}">Ver Productos</a>
+                    </div>
                 </div>
-
+                
+                <div class="row">
+                    <div class="col text-center">
+                        <h3 class="text-white">Total Canasta en La Reina</h3>
+                        <p class="text-white display-6 fw-bold">${{ total_la_reina }}</p>
+                    </div>
+                    <div class="col text-center">
+                        <h3 class="text-white">Total Canasta en el Coto</h3>
+                        <p class="text-white display-6 fw-bold">${{ total_coto  }}</p>
+                    </div>
+                </div>             
+                <div class="text-center mt-4">
+                    <a class="btn btn-light" href="{% url 'canasta' %}">Volver a la Canasta Básica</a>
+                </div>
+                
             </div>
         </div>
     </div>

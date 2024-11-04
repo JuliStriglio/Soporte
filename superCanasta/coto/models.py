@@ -8,6 +8,6 @@ class Producto(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_act = models.DateTimeField(auto_now=True)  # Se actualiza automáticamente en cada guardado
 
-def __str__(self):
-  return self.descripcion
+    def __str__(self):
+        return f"{self.descripcion} - ${self.precio}"
     
