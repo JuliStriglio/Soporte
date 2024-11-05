@@ -138,7 +138,7 @@ def scrapProductosCoto():
 
                         # Guarda el producto en la base de datos
                         if descripcion_elemento:
-                         nombre = descripcion_elemento.text()
+                         nombre = descripcion_elemento
                         try:
                             producto = Producto(
                                 descripcion=nombre,
